@@ -4,14 +4,24 @@ const playerTwo = 'O';
 let isGameOver = false;
 let currentTurn = 0;
 let board = [
-  "", "", "",
-  "", "", "",
-  "", "", "",
+  "-", "-", "-",
+  "-", "-", "-",
+  "-", "-", "-",
 ]
+
+function printBoard(){
+  console.log("\n=================")
+  for(let i=0; i<board.length; ){
+    console.log(board[i], board[i+1], board[i+2]);
+    i += 3;
+  }
+  console.log("=================")
+}
 
 function gameOverCalculate(playerMove){
   const potentialWinner = checkIsWinner(currentTurn, playerMove);
   if(potentialWinner.winner){
+    printBoard();
     console.log(`Winner is ${potentialWinner.player}`)
   }
   return potentialWinner.winner || currentTurn === 8;
@@ -52,7 +62,6 @@ function verifyWinningStrategies(strategies, playerSymbol){
   let isWinner = false;
   strategies.forEach((strategy) => {
     if(isWinner) return;
-    console.log(playerSymbol, " player - winning strat ", strategy);
     const result = strategy.every((s) => board[s] === playerSymbol)
     isWinner = result;
   })
@@ -60,6 +69,7 @@ function verifyWinningStrategies(strategies, playerSymbol){
 }
 
 while(!isGameOver){
+  printBoard();
   const playerSymbol = getPlayerSymbol(currentTurn);
   const playerMove =  prompt(`Player ${playerSymbol} enter a move (0-8) - `);
   isGameOver = gameOverCalculate(playerMove);
