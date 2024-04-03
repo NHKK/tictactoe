@@ -9,8 +9,12 @@ let board = [
   "", "", "",
 ]
 
-function gameOverCalculate(){
-
+function gameOverCalculate(playerMove){
+  const potentialWinner = checkIsWinner(currentTurn, playerMove);
+  if(potentialWinner.winner){
+    console.log(`Winner is ${potentialWinner.player}`)
+  }
+  return potentialWinner.winner || currentTurn === 8;
 }
 
 function checkIsWinner(currentTurn, movePlayed){
@@ -54,6 +58,10 @@ function verifyWinningStrategies(strategies, playerSymbol){
   })
   return isWinner;
 }
-const name = prompt('number');
-console.log(`Hey there ${name}`);
-console.log('hasWinner ', checkIsWinner(currentTurn, name))
+
+while(!isGameOver){
+  const playerSymbol = getPlayerSymbol(currentTurn);
+  const playerMove =  prompt(`Player ${playerSymbol} enter a move (0-8) - `);
+  isGameOver = gameOverCalculate(playerMove);
+  currentTurn += 1;
+}
