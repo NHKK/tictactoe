@@ -68,10 +68,20 @@ function verifyWinningStrategies(strategies, playerSymbol){
   return isWinner;
 }
 
+function verifyMove(playerMove){
+  const potentialMove = board[playerMove];
+  return potentialMove === "-";
+}
+
 while(!isGameOver){
   printBoard();
   const playerSymbol = getPlayerSymbol(currentTurn);
-  const playerMove =  prompt(`Player ${playerSymbol} enter a move (0-8) - `);
+  let playerMove =  prompt(`Player ${playerSymbol} enter a move (0-8) - `);
+  let isMoveValid = verifyMove(playerMove);
+  while(!isMoveValid){
+    playerMove =  prompt(`Invalid move please enter valid move Player ${playerSymbol} - `);
+    isMoveValid = verifyMove(playerMove);
+  }
   isGameOver = gameOverCalculate(playerMove);
   currentTurn += 1;
 }
