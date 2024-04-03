@@ -13,15 +13,21 @@ function gameOverCalculate(){
 
 }
 
-function hasWinner(currentTurn, movePlayed){
-  const isPlayerOne = currentTurn % 2 !== 1;
-  updateBoard(isPlayerOne, movePlayed);
-  getWinningStrategies(movePlayed);
+function checkIsWinner(currentTurn, movePlayed){
+  const playerSymbol = getPlayerSymbol(currentTurn);
+  updateBoard(playerSymbol, movePlayed);
+  const winningStrategies = getWinningStrategies(movePlayed);
+  const isWinner = verifyWinningStrategies(winningStrategies, playerSymbol);
+  return {player: playerSymbol, winner: isWinner}
 }
 
-function updateBoard(isPlayerOne, movePlayed){
-  const updateSymbol = isPlayerOne ? playerOne : playerTwo;
-  board[movePlayed] = updateSymbol;
+function getPlayerSymbol(currentTurn){
+  const isPlayerOne = currentTurn % 2 !== 1;
+  return isPlayerOne ? playerOne : playerTwo;
+}
+
+function updateBoard(playerSymbol, movePlayed){
+  board[movePlayed] = playerSymbol;
 }
 
 function getWinningStrategies(movePlayed){
@@ -37,6 +43,17 @@ function getWinningStrategies(movePlayed){
   ];
   return WINNING_CONDITIONS.filter(condition => condition.includes(Number(movePlayed)));
 }
+
+function verifyWinningStrategies(strategies, playerSymbol){
+  let isWinner = false;
+  strategies.forEach((strategy) => {
+    if(isWinner) return;
+    console.log(playerSymbol, " player - winning strat ", strategy);
+    const result = strategy.every((s) => board[s] === playerSymbol)
+    isWinner = result;
+  })
+  return isWinner;
+}
 const name = prompt('number');
 console.log(`Hey there ${name}`);
-console.log('hasWinner ', hasWinner(currentTurn, name))
+console.log('hasWinner ', checkIsWinner(currentTurn, name))
