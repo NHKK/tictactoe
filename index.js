@@ -3,11 +3,11 @@ const playerOne = 'X';
 const playerTwo = 'O';
 let isGameOver = false;
 let currentTurn = 0;
-let board = [
-  "-", "-", "-",
-  "-", "-", "-",
-  "-", "-", "-",
-]
+let board = makeNewBoard(); 
+
+function makeNewBoard(){
+  return Array.from('-'.repeat(9));
+}
 
 function printBoard(){
   console.log("\n=================")
