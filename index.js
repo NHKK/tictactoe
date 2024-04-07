@@ -12,7 +12,7 @@ let board = [
 function printBoard(){
   console.log("\n=================")
   for(let i=0; i<board.length; ){
-    console.log(board[i], board[i+1], board[i+2]);
+    console.log(`${board[i]}:${i}, ${board[i+1]}:${i+1}, ${board[i+2]}:${i+2}`);
     i += 3;
   }
   console.log("=================")
